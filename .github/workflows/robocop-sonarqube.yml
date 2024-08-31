@@ -1,0 +1,31 @@
+name: Robocop SonarQube Integration
+
+on:
+    push:
+        branches: [main]
+
+jobs:
+    robocop:
+        name: Robocop Linting
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+    
+          - name: Set up Python
+            uses: actions/setup-python@v5.2.0
+            with:
+              python-version: '3.12'
+    
+          - name: Install dependencies
+            run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+          - name: Run Robocop
+            run: robocop
+    
+          - name: Upload SARIF Report
+            uses: actions/upload-artifact@v4
+            with:
+              name: robot-sarif-json
+              path: robot.sarif.json
+              overwrite: true
