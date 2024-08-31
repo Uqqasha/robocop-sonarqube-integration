@@ -1,0 +1,4 @@
+# Configuration file for Robocop
+
+--configure sarif:report_filename:robot.sarif.json
+--reports all,sarif
